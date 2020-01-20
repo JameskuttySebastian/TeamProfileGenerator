@@ -50,6 +50,10 @@ typings/
 # Optional npm cache directory
 .npm
 
+# npm
+node_modules
+npm-debug.log
+
 # Optional eslint cache
 .eslintcache
 
