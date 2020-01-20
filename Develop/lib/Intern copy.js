@@ -29,73 +29,65 @@ function validateString(name) {
 }
 
 
-let interns = [];
-const getIntern = async () => {
-    let intern = new Intern();
-    const name = await inquirer.prompt(
+const collectInputs = async (inputs = []) => {
+    const prompts = [
         {
-            message: "What's name of intern?",
+            message: "What's name of Intern?",
             type: "input",
             name: "name",
             validate: validateString
-        })
-        .then(function (ans) {
-            intern.name = ans.name;
-        })
-
-    const id = await inquirer.prompt(
+        },
         {
-            message: "What's ID of intern?",
+            message: "What's ID of Intern?",
             type: "input",
             name: "id",
             validate: validateNumber
-        })
-        .then(function (ans) {
-            intern.id = ans.id;
-        })
-
-    const email = await inquirer.prompt(
+        },
         {
             message: "What's the email?",
             type: "input",
             name: "email",
             validate: validateEmail
-        })
-        .then(function (ans) {
-            intern.email = ans.email;
-        })
-
-    const school = await inquirer.prompt(
+        },
         {
             message: "What's school name of Intern?",
             type: "input",
             name: "school",
             validate: validateString
-        })
-        .then(function (ans) {
-            intern.school = ans.school;
-        })
-
-    intern.role = intern.getRole();
-    interns.push(intern);
-
-    const repeat = await inquirer.prompt(
+        },
         {
             type: 'confirm',
             name: 'again',
             message: 'Enter another intern? ',
             default: true
-        })
-        .then(function (ans) {
-            return ans.again;
-        })
+        }
+ 
+    ];
 
-    console.log("intern" + JSON.stringify(intern));
-    console.log("interns------" + JSON.stringify(interns));
-    return repeat ? getIntern() : interns;
+    const { again, ...answers } = await inquirer.prompt(prompts);
+
+    const newInputs = [...inputs, answers];
+
+    return again ? collectInputs(newInputs) : newInputs;
+};
+
+const getIntern = async () => {
+
+    let internDetails = await collectInputs();
+
+    let type = { type: "intern" };
+
+    internData = internDetails.map(element => {
+        return { ...type, ...element };
+    });
+
+    // console.log("inputs---"+JSON.stringify(internData));
+
+    return internData;
+
 }
 
-getIntern();
+// getIntern();
 
 module.exports = {
     Intern,

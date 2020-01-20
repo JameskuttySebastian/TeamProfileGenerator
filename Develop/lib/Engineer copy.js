@@ -2,14 +2,14 @@ const Employee = require("./Employee");
 var inquirer = require('inquirer');
 
 class Engineer extends Employee {
-    constructor(name, id, email, github = "") {
-        super(name, id, email);
+    constructor(name,id,email,github = "") {
+        super(name,id,email);
         this.github = github;
         this.role = "";
-    }
-
-    getGithub() { return this.github }
-    getRole() { return "Engineer" };
+    }    
+    
+    getGithub(){return this.github}
+    getRole(){return "Engineer"};
 }
 
 function validateEmail(mail) {
@@ -30,76 +30,76 @@ function validateString(name) {
     return pattern.test(name) || "Not a valid string, Please try again";
 }
 
-let engineers = [];
-const getEngineer = async () => {
-    let engineer = new Engineer();
-    const name = await inquirer.prompt(
+
+const collectInputs = async (inputs = []) => {
+    const prompts = [
         {
             message: "What's name of Engineer?",
             type: "input",
             name: "name",
             validate: validateString
-        })
-        .then(function (ans) {
-            engineer.name = ans.name;
-        })
-
-    const id = await inquirer.prompt(
+        },
         {
             message: "What's ID of Engineer?",
             type: "input",
             name: "id",
             validate: validateNumber
-        })
-        .then(function (ans) {
-            engineer.id = ans.id;
-        })
-
-    const email = await inquirer.prompt(
+        },
         {
             message: "What's the email?",
             type: "input",
             name: "email",
             validate: validateEmail
-        })
-        .then(function (ans) {
-            engineer.email = ans.email;
-        })
-
-    const github = await inquirer.prompt(
+        },
         {
             message: "What's Git name of Engineer?",
             type: "input",
             name: "github",
             validate: validateString
-        })
-        .then(function (ans) {
-            engineer.github = ans.github;
-        })
-
-    engineer.role = engineer.getRole();
-    engineers.push(engineer);
-
-    const repeat = await inquirer.prompt(
+        },
         {
             type: 'confirm',
             name: 'again',
             message: 'Enter another Engineer? ',
             default: true
-        })
-        .then(function (ans) {
-            return ans.again;
-        })
+        }
+ 
+    ];
 
-    // console.log("engineer" + JSON.stringify(engineer));
-    // console.log("engineers------" + JSON.stringify(engineers));
-    return repeat ? getEngineer() : engineers;
+    const { again, ...answers } = await inquirer.prompt(prompts);
+
+    const newInputs = [...inputs, answers];
+
+    return again ? collectInputs(newInputs) : newInputs;
+};
+
+const getEngineer = async () => {
+
+    let engineerDetails = await collectInputs();
+
+    let engineersList = [];
+
+    engineerDetails.forEach(element => {
+            let engineer = new Engineer(element.name,element.id,element.email,element.github);
+            engineer.role = engineer.getRole();
+            engineersList.push(engineer);
+        });
+
+    // let type = { type: "Engineer" };
+
+    // engineerData = engineerDetails.map(element => {
+    //     return { ...type, ...element };
+    // });
+
+    console.log("inputs---"+JSON.stringify(engineersList));
+
+    // return engineersList;
+
 }
 
 getEngineer();
 
 module.exports = {
     Engineer,
-    getEngineer
-};
+    getEngineer};
 
