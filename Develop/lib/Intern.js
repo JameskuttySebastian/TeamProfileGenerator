@@ -90,12 +90,12 @@ const getIntern = async () => {
             return ans.again;
         })
 
-    console.log("intern" + JSON.stringify(intern));
-    console.log("interns------" + JSON.stringify(interns));
+    // console.log("intern" + JSON.stringify(intern));
+    // console.log("interns------" + JSON.stringify(interns));
     return repeat ? getIntern() : interns;
 }
 
-getIntern();
+// getIntern();
 
 module.exports = {
     Intern,

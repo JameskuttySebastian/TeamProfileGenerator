@@ -3,12 +3,12 @@ var inquirer = require('inquirer');
 
 
 class Manager extends Employee {
-    constructor(name,id,email,officeNumber = "") {
-        super(name,id,email);
+    constructor(name, id, email, officeNumber = "") {
+        super(name, id, email);
         this.officeNumber = officeNumber;
-    }    
-    getOfficeNumber(){return this.officeNumber}
-    getRole(){return "Manager"};
+    }
+    getOfficeNumber() { return this.officeNumber }
+    getRole() { return "Manager" };
 }
 
 
@@ -81,13 +81,14 @@ const getManager = async () => {
     manager.role = manager.getRole();
     managers.push(manager);
 
-    console.log("manager" + JSON.stringify(manager));
-    console.log("managers------" + JSON.stringify(managers));
+    // console.log("manager" + JSON.stringify(manager));
+    // console.log("managers------" + JSON.stringify(managers));
     return managers;
 }
 
-getManager();
+// getManager();
 
 module.exports = {
     Manager,
-    getManager}
+    getManager
+}

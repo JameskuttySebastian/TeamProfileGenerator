@@ -1,4 +1,5 @@
-<div class="outer">
+function generateHtml(data) {
+    return `<div class="outer">
     <div class="box">
         <div class="heading">
             <h4>${data.name}</h4>
@@ -12,4 +13,6 @@
             </div>
         </div>
     </div>
-</div>
+</div>`
+}
+module.exports = {generateHtml: generateHtml};
