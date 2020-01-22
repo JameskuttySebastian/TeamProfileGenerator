@@ -1,34 +1,18 @@
 const Employee = require("./Employee");
-var inquirer = require('inquirer');
+const inquirer = require('inquirer');
+const validate = require("./validate");
+
 
 class Engineer extends Employee {
     constructor(name, id, email, github = "") {
         super(name, id, email);
         this.github = github;
-        this.role = "";
     }
-
+    getRole(){return "Engineer"}; 
     getGithub() { return this.github }
-    getRole() { return "Engineer" };
 }
 
-function validateEmail(mail) {
-    mail = mail.trim();
-    var pattern = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
-    return pattern.test(mail) || "Not a valid email, Please try again";
-}
 
-function validateNumber(id) {
-    id = id.trim();
-    var pattern = /^\d+$/;
-    return pattern.test(id) || "Not a valid number, Please try again";
-}
-
-function validateString(name) {
-    name = name.trim();
-    var pattern = /^[a-zA-Z ]{3,30}$/;
-    return pattern.test(name) || "Not a valid string, Please try again";
-}
 
 let engineers = [];
 const getEngineer = async () => {
@@ -38,7 +22,7 @@ const getEngineer = async () => {
             message: "What's name of Engineer?",
             type: "input",
             name: "name",
-            validate: validateString
+            validate: validate.validateString
         })
         .then(function (ans) {
             engineer.name = ans.name;
@@ -49,7 +33,7 @@ const getEngineer = async () => {
             message: "What's ID of Engineer?",
             type: "input",
             name: "id",
-            validate: validateNumber
+            validate: validate.validateNumber
         })
         .then(function (ans) {
             engineer.id = ans.id;
@@ -60,7 +44,7 @@ const getEngineer = async () => {
             message: "What's the email?",
             type: "input",
             name: "email",
-            validate: validateEmail
+            validate: validate.validateEmail
         })
         .then(function (ans) {
             engineer.email = ans.email;
@@ -71,7 +55,7 @@ const getEngineer = async () => {
             message: "What's Git name of Engineer?",
             type: "input",
             name: "github",
-            validate: validateString
+            validate: validate.validateString
         })
         .then(function (ans) {
             engineer.github = ans.github;
@@ -99,7 +83,6 @@ const getEngineer = async () => {
 // getEngineer();
 
 module.exports = {
-    Engineer,
-    getEngineer
+    Engineer: Engineer,
+    getEngineer: getEngineer
 };
-

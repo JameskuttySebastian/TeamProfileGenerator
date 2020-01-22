@@ -9,7 +9,7 @@ function generateHtml(data) {
             <div class="item">
                 <p>ID: <span>${data.id}</span></p>
                 <p>Email: <span class="link">${data.email}</span></p>
-                <p class="last-item">Office number: <span>${data.phone}</span></p>
+                <p class="last-item">Office number: <span>${data.officeNumber}</span></p>
             </div>
         </div>
     </div>

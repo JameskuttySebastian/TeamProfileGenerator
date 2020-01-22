@@ -1,5 +1,6 @@
 const Employee = require("./Employee");
-var inquirer = require('inquirer');
+const inquirer = require('inquirer');
+const validate = require("./validate");
 
 
 class Manager extends Employee {
@@ -8,26 +9,7 @@ class Manager extends Employee {
         this.officeNumber = officeNumber;
     }
     getOfficeNumber() { return this.officeNumber }
-    getRole() { return "Manager" };
-}
-
-
-function validateEmail(mail) {
-    mail = mail.trim();
-    var pattern = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
-    return pattern.test(mail) || "Not a valid email, Please try again";
-}
-
-function validateNumber(id) {
-    id = id.trim();
-    var pattern = /^\d+$/;
-    return pattern.test(id) || "Not a valid number, Please try again";
-}
-
-function validateString(name) {
-    name = name.trim();
-    var pattern = /^[a-zA-Z ]{3,30}$/;
-    return pattern.test(name) || "Not a valid string, Please try again";
+    getRole() {return "Manager"};
 }
 
 
@@ -39,7 +21,7 @@ const getManager = async () => {
             message: "What's name of Manager?",
             type: "input",
             name: "name",
-            validate: validateString
+            validate: validate.validateString
         })
         .then(function (ans) {
             manager.name = ans.name;
@@ -50,7 +32,7 @@ const getManager = async () => {
             message: "What's ID of Manager?",
             type: "input",
             name: "id",
-            validate: validateNumber
+            validate: validate.validateNumber
         })
         .then(function (ans) {
             manager.id = ans.id;
@@ -61,7 +43,7 @@ const getManager = async () => {
             message: "What's the email?",
             type: "input",
             name: "email",
-            validate: validateEmail
+            validate: validate.validateEmail
         })
         .then(function (ans) {
             manager.email = ans.email;
@@ -72,7 +54,7 @@ const getManager = async () => {
             message: "What's office number of Manager?",
             type: "input",
             name: "officeNumber",
-            validate: validateNumber
+            validate: validate.validateNumber
         })
         .then(function (ans) {
             manager.officeNumber = ans.officeNumber;
@@ -89,6 +71,6 @@ const getManager = async () => {
 // getManager();
 
 module.exports = {
-    Manager,
-    getManager
+    Manager: Manager,
+    getManager: getManager
 }

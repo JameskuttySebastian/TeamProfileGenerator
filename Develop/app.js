@@ -14,9 +14,11 @@ const writeFileAsync = util.promisify(fs.writeFile);
 
 const main = async () => {
 
-    employeeHtmlArray = [];
+    let employeeHtmlArray = [];
 
     const managerObj = await getManager();
+
+    // console.log(managerObj);
 
     managerObj.forEach(element => {
         employeeHtmlArray.push(managerHtmlFile.generateHtml(element))
@@ -42,10 +44,10 @@ const main = async () => {
 
     let htmlFile = mainHtmlFile.generateHtml(employeeHtml);
 
-    console.log("all---" + JSON.stringify(htmlFile));
+    // console.log("all---" + JSON.stringify(htmlFile));
 
     await writeFileAsync(`./output/team.html`, htmlFile);
-}
+};
 
 
 main();

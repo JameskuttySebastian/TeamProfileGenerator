@@ -1,32 +1,16 @@
 const Employee = require("./Employee");
-var inquirer = require('inquirer');
+const inquirer = require('inquirer');
+const validate = require("./validate");
 
 class Intern extends Employee {
     constructor(name,id,email,school = "") {
         super(name,id,email);
         this.school = school;
     }    
-    getSchool(){return this.school}
-    getRole(){return "Intern"};
+    getSchool(){return this.school};
+    getRole() {return "Intern"};
 }
 
-function validateEmail(mail) {
-    mail = mail.trim();
-    var pattern = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
-    return pattern.test(mail) || "Not a valid email, Please try again";
-}
-
-function validateNumber(id) {
-    id = id.trim();
-    var pattern = /^\d+$/;
-    return pattern.test(id) || "Not a valid number, Please try again";
-}
-
-function validateString(name) {
-    name = name.trim();
-    var pattern = /^[a-zA-Z ]{3,30}$/;
-    return pattern.test(name) || "Not a valid string, Please try again";
-}
 
 
 let interns = [];
@@ -37,7 +21,7 @@ const getIntern = async () => {
             message: "What's name of intern?",
             type: "input",
             name: "name",
-            validate: validateString
+            validate: validate.validateString
         })
         .then(function (ans) {
             intern.name = ans.name;
@@ -48,7 +32,7 @@ const getIntern = async () => {
             message: "What's ID of intern?",
             type: "input",
             name: "id",
-            validate: validateNumber
+            validate: validate.validateNumber
         })
         .then(function (ans) {
             intern.id = ans.id;
@@ -59,7 +43,7 @@ const getIntern = async () => {
             message: "What's the email?",
             type: "input",
             name: "email",
-            validate: validateEmail
+            validate: validate.validateEmail
         })
         .then(function (ans) {
             intern.email = ans.email;
@@ -70,7 +54,7 @@ const getIntern = async () => {
             message: "What's school name of Intern?",
             type: "input",
             name: "school",
-            validate: validateString
+            validate: validate.validateString
         })
         .then(function (ans) {
             intern.school = ans.school;
@@ -98,6 +82,6 @@ const getIntern = async () => {
 // getIntern();
 
 module.exports = {
-    Intern,
-    getIntern};
+    Intern: Intern,
+    getIntern: getIntern};
 
