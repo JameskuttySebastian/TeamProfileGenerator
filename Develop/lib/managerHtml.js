@@ -1,3 +1,6 @@
+
+// using the function to fill the object values to html structure
+
 function generateHtml(data) {
     return `<div class="outer">
     <div class="box">
@@ -15,4 +18,7 @@ function generateHtml(data) {
     </div>
 </div>`
 }
+
+//exports the class
+
 module.exports = {generateHtml: generateHtml};

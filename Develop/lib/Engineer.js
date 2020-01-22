@@ -1,22 +1,28 @@
+
+// inherit the employee class to extend
 const Employee = require("./Employee");
+// for user input collection
 const inquirer = require('inquirer');
+// for user input validation
 const validate = require("./validate");
 
-
+// Engineer class 
 class Engineer extends Employee {
     constructor(name, id, email, github = "") {
         super(name, id, email);
         this.github = github;
     }
-    getRole(){return "Engineer"}; 
+    getRole() { return "Engineer" };
     getGithub() { return this.github }
 }
 
-
+//Engineer data collection function
 
 let engineers = [];
 const getEngineer = async () => {
     let engineer = new Engineer();
+
+    // set of questions. App collects and sets attributes
     const name = await inquirer.prompt(
         {
             message: "What's name of Engineer?",
@@ -49,6 +55,7 @@ const getEngineer = async () => {
         .then(function (ans) {
             engineer.email = ans.email;
         })
+    // asking special question that belongs to engineer
 
     const github = await inquirer.prompt(
         {
@@ -64,6 +71,8 @@ const getEngineer = async () => {
     engineer.role = engineer.getRole();
     engineers.push(engineer);
 
+    //asking question whether to repeat
+
     const repeat = await inquirer.prompt(
         {
             type: 'confirm',
@@ -77,11 +86,15 @@ const getEngineer = async () => {
 
     // console.log("engineer" + JSON.stringify(engineer));
     // console.log("engineers------" + JSON.stringify(engineers));
+
+    //return the engineers array, when user confirms all the engineers are entered
     return repeat ? getEngineer() : engineers;
 }
 
 // getEngineer();
 
+
+//exports the functions
 module.exports = {
     Engineer: Engineer,
     getEngineer: getEngineer

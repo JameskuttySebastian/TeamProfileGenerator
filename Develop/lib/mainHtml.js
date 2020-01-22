@@ -1,3 +1,7 @@
+
+
+// using the function to fill the object values to html structure
+
 function generateHtml(data) {
     return `<!DOCTYPE html>
     <html lang="en">
@@ -108,4 +112,9 @@ function generateHtml(data) {
         
 
 }
+
+
+//exports the class
+
+
 module.exports = {generateHtml: generateHtml};
